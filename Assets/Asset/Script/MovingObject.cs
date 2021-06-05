@@ -5,7 +5,11 @@ using UnityEngine;
 public class MovingObject : MonoBehaviour
 {
     // Start is called before the first frame update
-    
+
+    static public MovingObject instatnce;
+
+    public string currentMapName; //«ˆ¿Á ∏ ¿Ã∏ß
+
     public float speed;
 
     private Vector3 vector;
@@ -19,14 +23,22 @@ public class MovingObject : MonoBehaviour
     private bool canMove = true;
 
     private Animator animator;
-
     private BoxCollider2D boxCollider;
     public LayerMask layerMask;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
-        boxCollider = GetComponent<BoxCollider2D>();
+        if(instatnce == null)
+        {
+            instatnce = this;
+            DontDestroyOnLoad(this.gameObject);
+            animator = GetComponent<Animator>();
+            boxCollider = GetComponent<BoxCollider2D>();
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     IEnumerator MoveCoroutine()

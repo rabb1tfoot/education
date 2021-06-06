@@ -5,11 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class TransforMap : MonoBehaviour
 {
+    public string transferMapName;
+
     public Transform target;
     public string direction;
     private PlayerManager Player;
     private CameraManager Camera;
-    public BoxCollider2D targetBound;
 
     void Start()
     {
@@ -19,49 +20,14 @@ public class TransforMap : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player")
+        if(collision.gameObject.name == "Player")
         {
-            Camera.SetBound(targetBound);
-            if (direction.Equals("Up"))
-            {
+            Player.currentMapName = transferMapName;
 
-                Player.transform.position = target.transform.position;
+            Player.transform.position = target.transform.position;
 
-                Camera.transform.position = new Vector3(target.transform.position.x
-                    , target.transform.position.y  +48, Camera.transform.position.z);
-            }
-            else if (direction.Equals("Down"))
-            {
-
-                Player.transform.position = target.transform.position;
-
-                Camera.transform.position = new Vector3(target.transform.position.x
-                    , target.transform.position.y - 48, Camera.transform.position.z);
-            }
-            else if (direction.Equals("Left"))
-            {
-
-                Player.transform.position = target.transform.position;
-
-                Camera.transform.position = new Vector3(target.transform.position.x - 48
-                    , target.transform.position.y, Camera.transform.position.z);
-            }
-            else if (direction.Equals("Right"))
-            {
-
-                Player.transform.position = target.transform.position;
-
-                Camera.transform.position = new Vector3(target.transform.position.x + 48
-                    , target.transform.position.y, Camera.transform.position.z);
-            }
-            else
-            {
-                Player.transform.position = target.transform.position;
-
-                Camera.transform.position = new Vector3(target.transform.position.x
-                    , target.transform.position.y, Camera.transform.position.z);
-            }
+            Camera.transform.position = new Vector3(target.transform.position.x
+                , target.transform.position.y, this.transform.position.z);
         }
-
     }
 }

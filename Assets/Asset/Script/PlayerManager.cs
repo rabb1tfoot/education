@@ -2,9 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MovingObject
+public class PlayerManager : MonoBehaviour //MovingObject
 {
     // Start is called before the first frame update
+
+    public float speed;
+    private int walkCount;
+
+    private Vector3 vector;
+
+    public BoxCollider2D boxCollider;
+    public LayerMask layerMask;
+    public Animator animator;
 
     static public PlayerManager instatnce;
 
@@ -82,10 +91,8 @@ public class PlayerManager : MovingObject
 
             //발걸음 사운드 추가
             int temp = Random.Range(1, 2);
-
             switch (temp)
             {
-
                 case 1:
                     customaudio.Play(walksound_1);
                     break;
@@ -93,7 +100,6 @@ public class PlayerManager : MovingObject
                     customaudio.Play(walksound_1);
                     break;
             }
-
 
             while (currentWalkCount < walkCount)
             {
@@ -111,8 +117,8 @@ public class PlayerManager : MovingObject
                 }
                 currentWalkCount++;
                 yield return new WaitForSeconds(0.01f);
-
-            }
+           
+           }
             currentWalkCount = 0;
         }
         animator.SetBool("Walking", false);

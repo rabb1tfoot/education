@@ -7,13 +7,13 @@ public class TransforMap : MonoBehaviour
 {
     public Transform target;
     public string direction;
-    private MovingObject Player;
+    private PlayerManager Player;
     private CameraManager Camera;
     public BoxCollider2D targetBound;
 
     void Start()
     {
-        Player = FindObjectOfType<MovingObject>();
+        Player = FindObjectOfType<PlayerManager>();
         Camera = FindObjectOfType<CameraManager>();
     }
 

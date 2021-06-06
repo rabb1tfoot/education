@@ -7,11 +7,11 @@ public class TransforScene : MonoBehaviour
 {
     public string transferSceneName;
 
-    private MovingObject Player;
+    private PlayerManager Player;
 
     void Start()
     {
-        Player = FindObjectOfType<MovingObject>();
+        Player = FindObjectOfType<PlayerManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

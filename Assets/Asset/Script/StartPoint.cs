@@ -7,12 +7,12 @@ public class StartPoint : MonoBehaviour
     // Start is called before the first frame update
 
     public string startPoint;
-    private MovingObject Player;
+    private PlayerManager Player;
     private CameraManager Camera;
 
     void Start()
     {
-        Player = FindObjectOfType<MovingObject>();
+        Player = FindObjectOfType<PlayerManager>();
         Camera = FindObjectOfType<CameraManager>();
         if(startPoint == Player.currentMapName)
         {

@@ -18,25 +18,30 @@ public class PlayerManager : MovingObject
     public float runspeed;
     private float applyRunSpeed;
     private bool applyRunFlag = false;
-    private int currentWalkCount;
 
     private bool canMove = true;
 
-    void Start()
+    private void Awake()
     {
         if (instatnce == null)
         {
-            instatnce = this;
             DontDestroyOnLoad(this.gameObject);
-            animator = GetComponent<Animator>();
-            boxCollider = GetComponent<BoxCollider2D>();
-            customaudio = FindObjectOfType<AudioManager>();
-
+            instatnce = this;
         }
         else
         {
             Destroy(this.gameObject);
         }
+    }
+
+    void Start()
+    {
+        queue = new Queue<string>();
+        animator = GetComponent<Animator>();
+        boxCollider = GetComponent<BoxCollider2D>();
+        customaudio = FindObjectOfType<AudioManager>();
+        currentWalkCount = 0;
+
     }
 
     IEnumerator MoveCoroutine()
@@ -66,16 +71,8 @@ public class PlayerManager : MovingObject
             animator.SetFloat("DirX", vector.x);
             animator.SetFloat("DirY", vector.y);
 
-            RaycastHit2D hit;
-
-            Vector2 start = transform.position; // 캐릭터 현재위치
-            Vector2 end = start + new Vector2(vector.x * speed * walkCount, vector.y * speed * walkCount);
-            boxCollider.enabled = false;
-            hit = Physics2D.Linecast(start, end, layerMask);
-            boxCollider.enabled = true;
-
-            //충돌된다면 while을 빠져나감
-            if (hit.transform != null) //transform 대신 collider2D
+            bool checkCollisionFlag = base.CheckCollision();
+            if (checkCollisionFlag)
                 break;
 
             animator.SetBool("Walking", true);
@@ -85,14 +82,14 @@ public class PlayerManager : MovingObject
 
             switch (temp)
             {
-
                 case 1:
                     customaudio.Play(walksound_1);
                     break;
                 case 2:
-                    customaudio.Play(walksound_1);
+                    customaudio.Play(walksound_2);
                     break;
             }
+            
 
 
             while (currentWalkCount < walkCount)
@@ -110,7 +107,7 @@ public class PlayerManager : MovingObject
                     currentWalkCount++;
                 }
                 currentWalkCount++;
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(0.02f);
 
             }
             currentWalkCount = 0;

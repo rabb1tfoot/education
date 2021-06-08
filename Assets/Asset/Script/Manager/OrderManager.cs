@@ -16,6 +16,17 @@ public class OrderManager : MonoBehaviour
     {
         characters = ToList();
     }
+
+    public void NoMove()
+    {
+        Player.notMovewhentalking = true;
+    }
+
+    public void CanMove()
+    {
+        Player.notMovewhentalking = false;
+    }
+
     public List<MovingObject> ToList()
     {
         List<MovingObject> tempList = new List<MovingObject>();

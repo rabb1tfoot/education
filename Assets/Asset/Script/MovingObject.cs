@@ -94,10 +94,8 @@ public class MovingObject : MonoBehaviour
 
             animator.SetBool("Walking", true);
 
-            boxCollider.offset = new Vector2(vector.x * 0.01f * speed * walkCount
-                , vector.y * 0.007f * speed * walkCount);
-
-            print(boxCollider.offset);
+            boxCollider.offset = new Vector2(vector.x * 0.7f * speed * walkCount
+                , vector.y * 0.7f * speed * walkCount);
 
             while (currentWalkCount < walkCount)
             {

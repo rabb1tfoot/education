@@ -20,6 +20,7 @@ public class PlayerManager : MovingObject
     private bool applyRunFlag = false;
 
     private bool canMove = true;
+    public bool notMovewhentalking = false;
 
     private void Awake()
     {
@@ -47,7 +48,7 @@ public class PlayerManager : MovingObject
     IEnumerator MoveCoroutine()
     {
         while (Input.GetAxisRaw("Vertical") != 0 ||
-            Input.GetAxisRaw("Horizontal") != 0)
+            Input.GetAxisRaw("Horizontal") != 0 && !notMovewhentalking)
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
@@ -71,6 +72,9 @@ public class PlayerManager : MovingObject
             animator.SetFloat("DirX", vector.x);
             animator.SetFloat("DirY", vector.y);
 
+            boxCollider.offset = new Vector2(vector.x * 0.7f * speed * walkCount
+  , vector.y * 0.7f * speed * walkCount);
+
             bool checkCollisionFlag = base.CheckCollision();
             if (checkCollisionFlag)
                 break;
@@ -89,9 +93,6 @@ public class PlayerManager : MovingObject
                     customaudio.Play(walksound_2);
                     break;
             }
-
-            boxCollider.offset = new Vector2(vector.x * 0.01f * speed * walkCount
-              , vector.y * 0.007f * speed * walkCount);
 
             while (currentWalkCount < walkCount)
             {
@@ -126,7 +127,7 @@ public class PlayerManager : MovingObject
     void Update()
     {
 
-        if (canMove)
+        if (canMove && !notMovewhentalking)
         {
             if (Input.GetAxisRaw("Horizontal") != 0 ||
                 Input.GetAxisRaw("Vertical") != 0)

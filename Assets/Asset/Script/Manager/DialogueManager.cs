@@ -38,7 +38,6 @@ public class DialogueManager : MonoBehaviour
     public string enterSound;
 
     private AudioManager Audio;
-    private OrderManager Order;
     public bool talking = false;
     private bool keyActivated = false;
 
@@ -51,7 +50,6 @@ public class DialogueManager : MonoBehaviour
         listSprites = new List<Sprite>();
         listDialougeWindows = new List<Sprite>();
         Audio = FindObjectOfType<AudioManager>();
-        Order = FindObjectOfType<OrderManager>();
     }
 
     public void ShowDialogue(Dialogue _dialogue)
@@ -61,8 +59,6 @@ public class DialogueManager : MonoBehaviour
             return;
         }
         talking = true;
-
-        Order.NoMove();
 
         for (int i = 0; i < _dialogue.sentences.Length; ++i)
         {
@@ -135,7 +131,6 @@ public class DialogueManager : MonoBehaviour
         listSprites.Clear();
         listDialougeWindows.Clear();
         talking = false;
-        Order.CanMove();
     }
 
 

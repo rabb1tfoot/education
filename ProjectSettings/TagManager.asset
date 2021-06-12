@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - no passing
-  - 
+  - Weather
   - 
   - 
   - 
@@ -52,4 +52,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 1770855091
+    locked: 0
+  - name: Weather
+    uniqueID: 2641009827
     locked: 0

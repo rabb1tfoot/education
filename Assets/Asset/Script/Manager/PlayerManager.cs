@@ -21,6 +21,7 @@ public class PlayerManager : MovingObject
 
     private bool canMove = true;
     public bool notMovewhentalking = false;
+    private float animSpeed = 1f;
 
     private void Awake()
     {
@@ -52,12 +53,16 @@ public class PlayerManager : MovingObject
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
+                animSpeed = 2f;
+                animator.SetFloat("AnimSpeed", animSpeed);
                 applyRunSpeed = runspeed;
                 applyRunFlag = true;
             }
 
             else
             {
+                animSpeed = 1f;
+                animator.SetFloat("AnimSpeed", animSpeed);
                 applyRunSpeed = 0;
                 applyRunFlag = false;
             }

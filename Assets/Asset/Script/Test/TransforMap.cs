@@ -6,8 +6,18 @@ using UnityEngine.SceneManagement;
 public class TransforMap : MonoBehaviour
 {
     public Transform target;
+    [Tooltip("Up, Down, Left, Right")]
     public string direction;
     public BoxCollider2D targetBound;
+
+    public Animator anim_1;
+    public Animator anim_2;
+
+    public int door_count;
+    private Vector2 vector;
+
+    [Tooltip("문의 존재여부(애니메이션) true or false")]
+    public bool door;
 
     private MovingObject Player;
     private CameraManager Camera;
@@ -23,19 +33,88 @@ public class TransforMap : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player")
+        if (!door)
         {
-            StartCoroutine(MapTransforCoroutine());
+            if (collision.gameObject.name == "Player")
+            {
+                StartCoroutine(MapTransforCoroutine());
+            }
         }
 
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if(door)
+        {
+            if(Input.GetKeyDown(KeyCode.Z))
+            {
+                vector.Set(Player.animator.GetFloat("DirX"), Player.animator.GetFloat("DirY"));
+                switch (direction)
+                {
+                    case "Up":
+                        if(vector.y == 1f)
+                        {
+                            StartCoroutine(MapTransforCoroutine());
+                        }
+                        break;
+                    case "Down":
+                        if (vector.y == -1f)
+                        {
+                            StartCoroutine(MapTransforCoroutine());
+                        }
+                        break;
+                    case "Right":
+                        if (vector.x == 1f)
+                        {
+                            StartCoroutine(MapTransforCoroutine());
+                        }
+                        break;
+                    case "Left":
+                        if (vector.x == -1f)
+                        {
+                            StartCoroutine(MapTransforCoroutine());
+                        }
+                        break;
+                    default:
+                        StartCoroutine(MapTransforCoroutine());
+                        break;
+                }
+            }
+        }
+    }
+
     IEnumerator MapTransforCoroutine()
     {
+        Order.PreLoadCharactor();
+
         Fade.FadeOut();
         Order.NoMove();
-        yield return new WaitForSeconds(1f);
 
+        if(door)
+        {
+            anim_1.SetBool("Open", true);
+            if (door_count == 2)
+            {
+                anim_2.SetBool("Open", true);
+            }
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        Order.SetTransparent("Player");
+
+        if(door)
+        {
+            anim_1.SetBool("Open", false);
+            if (door_count == 2)
+            {
+                anim_2.SetBool("Open", false);
+            }
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        Order.SetUnTransparent("Player");
         Camera.SetBound(targetBound);
         if (direction.Equals("Up"))
         {

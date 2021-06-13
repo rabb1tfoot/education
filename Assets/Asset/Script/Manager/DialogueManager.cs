@@ -40,6 +40,7 @@ public class DialogueManager : MonoBehaviour
     private AudioManager Audio;
     public bool talking = false;
     private bool keyActivated = false;
+    private bool OnlyText = false;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +53,22 @@ public class DialogueManager : MonoBehaviour
         Audio = FindObjectOfType<AudioManager>();
     }
 
+    public void ShowText(string[] _sentences)
+    {
+        OnlyText = true;
+        if (talking)
+        {
+            return;
+        }
+        talking = true;
+
+        for (int i = 0; i < _sentences.Length; ++i)
+        {
+            listSentences.Add(_sentences[i]);
+        }
+        StartCoroutine(StartTextCoroutine());
+    }
+
     public void ShowDialogue(Dialogue _dialogue)
     {
         if(talking)
@@ -59,6 +76,7 @@ public class DialogueManager : MonoBehaviour
             return;
         }
         talking = true;
+        OnlyText = false;
 
         for (int i = 0; i < _dialogue.sentences.Length; ++i)
         {
@@ -120,6 +138,20 @@ public class DialogueManager : MonoBehaviour
         }
 
     }
+    IEnumerator StartTextCoroutine()
+    {
+        keyActivated = true;
+        for (int i = 0; i < listSentences[count].Length; ++i)
+        {
+            text.text += listSentences[count][i]; // count번째 문장의  i번째 문자 추가
+            if (i % 7 == 1)
+            {
+                Audio.Play(typeSound);
+            }
+            yield return new WaitForSeconds(0.01f);
+        }
+
+    }
     public void ExitDialogue()
     {
 
@@ -155,7 +187,14 @@ public class DialogueManager : MonoBehaviour
                 else
                 {
                     StopAllCoroutines();
-                    StartCoroutine(StartDialogueCoroutine());
+                    if(OnlyText)
+                    {
+                        StartCoroutine(StartTextCoroutine());
+                    }
+                    else
+                    {
+                        StartCoroutine(StartDialogueCoroutine());
+                    }
                 }
             }
         }

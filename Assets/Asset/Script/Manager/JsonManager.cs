@@ -44,4 +44,14 @@ public class JsonManager : MonoBehaviour
         Data data3 = JsonUtility.FromJson<Data>(str2);
         data3.printData();
     }
+
+    void LoadJson(string _path, object _saveObj)
+    {
+
+    }
+    void SaveItemJson(string _path, object _saveObj)
+    {
+        CustomFunc.GetInstance().GetAssetPath(ref _path);
+        File.WriteAllText(_path + "/ItemDB.json", JsonUtility.ToJson());
+    }
 }

@@ -44,6 +44,18 @@ public class PlayerManager : MovingObject
         customaudio = FindObjectOfType<AudioManager>();
         currentWalkCount = 0;
 
+        string Path = Application.streamingAssetsPath;
+        string[] pathsplit = Path.Split('/');
+        Path = "";
+        for (int i = 0; i < pathsplit.Length - 1; ++i)
+        {
+            Path += pathsplit[i];
+            Path += "/";
+        }
+        Path += "\\Asset\\ItemIcon";
+
+        Debug.Log(Path);
+
     }
 
     IEnumerator MoveCoroutine()

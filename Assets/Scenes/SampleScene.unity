@@ -2834,6 +2834,7 @@ GameObject:
   - component: {fileID: 1004638583}
   - component: {fileID: 1004638582}
   - component: {fileID: 1004638581}
+  - component: {fileID: 1004638584}
   m_Layer: 5
   m_Name: InputField
   m_TagString: Untagged
@@ -2850,7 +2851,7 @@ RectTransform:
   m_GameObject: {fileID: 1004638579}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 10, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_Children:
   - {fileID: 353177667}
   - {fileID: 1091145501}
@@ -2947,7 +2948,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 596319f8dab809349bd8c2cd1d0b2c0e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 79414081bb6c26a49b79a289c03bb119, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2965,6 +2966,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1004638579}
   m_CullTransparentMesh: 1
+--- !u!114 &1004638584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004638579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7793bd5a5a78949856850ed8b32d8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 1091145502}
 --- !u!1 &1022257178
 GameObject:
   m_ObjectHideFlags: 0

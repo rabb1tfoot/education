@@ -29,13 +29,9 @@ public class DatabaseManager : MonoBehaviour
 
     void Start()
     {
-        itemList.Add(new Item(10001, "포션", "체력을 50 채워줍니다.", Item.ItemType.Use));
-        itemList.Add(new Item(10002, "마나포션", "마력을 50 채워줍니다.", Item.ItemType.Use));
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //itemList.Add(new Item(10001, "포션", "체력을 50 채워줍니다.", Item.ItemType.Use));
+        //itemList.Add(new Item(10002, "마나포션", "마력을 50 채워줍니다.", Item.ItemType.Use));
+        //JsonManager.GetInstance().SaveItemJson(itemList);
+        //JsonManager.GetInstance().LoadItemJson();
     }
 }

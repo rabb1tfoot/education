@@ -9,8 +9,8 @@ public class Item
     public string itemName;
     public string itemDescription; // 아이템 설명
     public int itemCount;
-    public Sprite itemIcon;
     public ItemType eType;
+    public Sprite itemIcon;
     public enum ItemType
     {
         Use,
@@ -23,22 +23,8 @@ public class Item
         itemID = _itemID;
         itemName = _itemName;
         itemDescription = _itemDes;
-        eType = _etype;
         itemCount = _itemCount;
-        string Path = "";
-        CustomFunc.GetInstance().GetAssetPath(ref Path);
-        Path += "\\ItemIcon";
-        itemIcon = Resources.Load(Path + _itemID.ToString(), typeof(Sprite)) as Sprite;
-    }
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        eType = _etype;
+        itemIcon = null;
     }
 }

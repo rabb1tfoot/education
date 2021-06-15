@@ -54,8 +54,6 @@ public class PlayerManager : MovingObject
         }
         Path += "\\Asset\\ItemIcon";
 
-        Debug.Log(Path);
-
     }
 
     IEnumerator MoveCoroutine()

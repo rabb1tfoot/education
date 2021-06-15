@@ -2,56 +2,82 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using LitJson;
 
 public class JsonManager : MonoBehaviour
 {
-    [System.Serializable]
-    public class Data
+    private static JsonManager instance;
+
+    public static JsonManager GetInstance()
     {
-        public int iLevel;
-        public Vector3 v3_Position;
-
-
-        public void printData()
-        {
-            Debug.Log("Level : " + iLevel);
-            Debug.Log("position : " + v3_Position);
-        }
+        if (instance == null)
+            instance = new JsonManager();
+        return instance;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private JsonManager() { }
+
+    //public class Data
+    //{
+    //    public int iLevel;
+    //    public Vector3 v3_Position;
+    //
+    //
+    //    public void printData()
+    //    {
+    //        Debug.Log("Level : " + iLevel);
+    //        Debug.Log("position : " + v3_Position);
+    //    }
+    //}
+
+    //void Start()
+    //{
+    //    Data data = new Data();
+    //    data.iLevel = -12;
+    //    data.v3_Position = new Vector3(1f, 2f, 3f);
+    //    
+    //    string str = JsonUtility.ToJson(data);
+    //    
+    //    Debug.Log("toJson" + str);
+    //    
+    //    Data data2 = JsonUtility.FromJson<Data>(str);
+    //    data2.printData();
+    //    
+    //    //파일 세이브
+    //    File.WriteAllText(Application.dataPath + "/TestJson.json", JsonUtility.ToJson(data));
+    //    
+    //    //파일로드
+    //    string str2 = "불러온 파일 읽기:";
+    //    str2 = File.ReadAllText(Application.dataPath + "/TestJson.json");
+    //    
+    //    Data data3 = JsonUtility.FromJson<Data>(str2);
+    //    data3.printData();
+    //}
+
+    public void LoadItemJson()
     {
-        Data data = new Data();
-        data.iLevel = -12;
-        data.v3_Position = new Vector3(1f, 2f, 3f);
-
-        string str = JsonUtility.ToJson(data);
-
-        Debug.Log("toJson" + str);
-
-        Data data2 = JsonUtility.FromJson<Data>(str);
-        data2.printData();
-
-        //Application.dataPath ==> Asset폴더
-        //파일 세이브
-        File.WriteAllText(Application.dataPath + "/TestJson.json", JsonUtility.ToJson(data));
-
-        //파일로드
-        string str2 = "불러온 파일 읽기:";
-        str2 = File.ReadAllText(Application.dataPath + "/TestJson.json");
-
-        Data data3 = JsonUtility.FromJson<Data>(str2);
-        data3.printData();
-    }
-
-    void LoadJson(string _path, object _saveObj)
-    {
-
-    }
-    void SaveItemJson(string _path, object _saveObj)
-    {
+        string _path = "";
         CustomFunc.GetInstance().GetAssetPath(ref _path);
-        File.WriteAllText(_path + "/ItemDB.json", JsonUtility.ToJson());
+        _path += "ItemDB.json";
+        string Jseonstring = File.ReadAllText(_path);
+        JsonData itemData = JsonMapper.ToObject(Jseonstring);
+
+        for(int i = 0; i< itemData.Count; ++i)
+        {
+            string ID = itemData[i]["itemID"].ToString();
+            string name = itemData[i]["itemName"].ToString();
+            string des = itemData[i]["itemDescription"].ToString();
+            string count = itemData[i]["itemCount"].ToString();
+            string type = itemData[i]["eType"].ToString();
+        }
+    
+    }
+    public void SaveItemJson(List<Item> _saveObj)
+    {
+        string _path = "";
+        CustomFunc.GetInstance().GetAssetPath(ref _path);
+        _path += "ItemDB.json";
+        JsonData ItemJson = JsonMapper.ToJson(_saveObj);
+        File.WriteAllText(_path, ItemJson.ToString());
     }
 }

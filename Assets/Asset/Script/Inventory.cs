@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
+    public static Inventory instance;
+    private DatabaseManager DBManager;
     private OrderManager Order;
-
     private AudioManager Audio;
+
     public string keySound;
     public string enterSound;
     public string cancelSound;
@@ -40,6 +42,8 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
+        instance = this;
+        DBManager = FindObjectOfType<DatabaseManager>();
         Audio = FindObjectOfType<AudioManager>();
         Order = FindObjectOfType<OrderManager>();
         inventoryItemList = new List<Item>();
@@ -47,6 +51,34 @@ public class Inventory : MonoBehaviour
         slots = invenUIPos.GetComponentsInChildren<InventorySlot>();
 
         
+    }
+
+    public void GetItem(int _ID, int _count = 1)
+    {
+        for (int i = 0; i < DBManager.itemList.Count; i++)
+        {
+            if(_ID == DBManager.itemList[i].itemID)
+            {
+                for(int j =0; j < inventoryItemList.Count; ++j)
+                {
+                    if(inventoryItemList[j].itemID == _ID)
+                    {
+                        if (inventoryItemList[j].eType == Item.ItemType.Use)
+                        {
+                            inventoryItemList[j].itemCount += _count;
+                        }
+                        else
+                        {
+                            inventoryItemList.Add(DBManager.itemList[i]);
+                        }
+                        return;
+                    }
+                }
+                inventoryItemList.Add(DBManager.itemList[i]);
+                return;
+            }
+        }
+        Debug.LogError("해당 아이템이 DB에 없음");
     }
 
     public void ShowTab()

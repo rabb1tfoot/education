@@ -42,7 +42,7 @@ public class Sound
 }
 public class AudioManager : MonoBehaviour
 {
-    static public GameObject instance;
+    static public AudioManager instance;
 
     [SerializeField]
     public Sound[] sounds;
@@ -56,7 +56,7 @@ public class AudioManager : MonoBehaviour
         else
         {
             DontDestroyOnLoad(this.gameObject);
-            instance = this.gameObject;
+            instance = this;
         }
     }
 

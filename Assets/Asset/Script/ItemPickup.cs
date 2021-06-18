@@ -8,10 +8,20 @@ public class ItemPickup : MonoBehaviour
     public int itemID;
     public int count;
     public string pickUpSound;
+    private bool OnTrigger = false;
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(Input.GetKeyDown(KeyCode.Z))
+        OnTrigger = true;
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        OnTrigger = false;
+    }
+
+    private void Update()
+    {
+        if (OnTrigger && Input.GetKeyDown(KeyCode.Z))
         {
             AudioManager.instance.Play(pickUpSound);
             Inventory.instance.GetItem(itemID, count);

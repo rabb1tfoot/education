@@ -9,7 +9,7 @@ public class Inventory : MonoBehaviour
     private DatabaseManager DBManager;
     private OrderManager Order;
     private AudioManager Audio;
-
+    private OOCScript OOC;
     public string keySound;
     public string enterSound;
     public string cancelSound;
@@ -28,6 +28,7 @@ public class Inventory : MonoBehaviour
 
     public GameObject thisObj; //활성화 비활성화
     public GameObject[] selectedTabImages; //텝 슬롯들
+    public GameObject GO_OOC; // 선택지 활성화 비활성화
 
     private int selectedItem;
     private int selectedTab;
@@ -46,6 +47,7 @@ public class Inventory : MonoBehaviour
         DBManager = FindObjectOfType<DatabaseManager>();
         Audio = FindObjectOfType<AudioManager>();
         Order = FindObjectOfType<OrderManager>();
+        OOC = FindObjectOfType<OOCScript>();
         inventoryItemList = new List<Item>();
         inventoryTabList = new List<Item>();
         slots = invenUIPos.GetComponentsInChildren<InventorySlot>();
@@ -75,6 +77,7 @@ public class Inventory : MonoBehaviour
                     }
                 }
                 inventoryItemList.Add(DBManager.itemList[i]);
+                inventoryItemList[inventoryItemList.Count - 1].itemCount = _count;
                 return;
             }
         }
@@ -330,7 +333,7 @@ public class Inventory : MonoBehaviour
                             {
                                 Audio.Play(enterSound);
                                 stopKeyInput = true;
-                                //소모 확인 선택지 호출
+                                StartCoroutine(OOCCoroutine());
 
                             }
                             else if (selectedTab == 1) //장비품
@@ -361,5 +364,31 @@ public class Inventory : MonoBehaviour
                 
             }
         }
+    }
+
+    IEnumerator OOCCoroutine()
+    {
+        GO_OOC.SetActive(true);
+        OOC.ShowChoice("사용하기", "취소하기");
+        yield return new WaitUntil(() => !OOC.activated);
+        if(OOC.GetResult())
+        {
+            for(int i = 0; i< inventoryItemList.Count; ++i)
+            {
+                if(inventoryItemList[i].itemID == inventoryTabList[selectedItem].itemID)
+                {
+                    if(inventoryItemList[i].itemCount > 1)
+                        inventoryItemList[i].itemCount--;
+                    else
+                    {
+                        inventoryItemList.RemoveAt(i);
+                    }
+                    ShowItem();
+                    break;
+                }
+            }
+        }
+        stopKeyInput = false;
+        GO_OOC.SetActive(false);
     }
 }

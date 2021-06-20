@@ -29,6 +29,7 @@ public class Inventory : MonoBehaviour
     public GameObject thisObj; //활성화 비활성화
     public GameObject[] selectedTabImages; //텝 슬롯들
     public GameObject GO_OOC; // 선택지 활성화 비활성화
+    public GameObject prefabFloatingText;
 
     private int selectedItem;
     private int selectedTab;
@@ -61,6 +62,13 @@ public class Inventory : MonoBehaviour
         {
             if(_ID == DBManager.itemList[i].itemID)
             {
+
+                var clone = Instantiate(prefabFloatingText, PlayerManager.instatnce.transform.position,
+                    Quaternion.Euler(Vector3.zero));
+                clone.GetComponent<FloatingText>().text.text = DBManager.itemList[i].itemName + " " + _count + "개 획득";
+
+                clone.transform.SetParent(this.transform);
+
                 for(int j =0; j < inventoryItemList.Count; ++j)
                 {
                     if(inventoryItemList[j].itemID == _ID)
@@ -377,7 +385,9 @@ public class Inventory : MonoBehaviour
             {
                 if(inventoryItemList[i].itemID == inventoryTabList[selectedItem].itemID)
                 {
-                    if(inventoryItemList[i].itemCount > 1)
+                    DBManager.itemUse(inventoryItemList[i].itemID);
+
+                    if (inventoryItemList[i].itemCount > 1)
                         inventoryItemList[i].itemCount--;
                     else
                     {

@@ -50,7 +50,7 @@ public class OOCScript : MonoBehaviour
         cancelText.text = _cancelText;
 
         usePanel.gameObject.SetActive(false);
-        cancelPanel.gameObject.SetActive(false);
+        cancelPanel.gameObject.SetActive(true);
 
         StartCoroutine(ShowChoiceCoroutine());
     }

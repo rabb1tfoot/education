@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour
     private OrderManager Order;
     private AudioManager Audio;
     private OOCScript OOC;
+    private Equipment equip;
     public string keySound;
     public string enterSound;
     public string cancelSound;
@@ -48,12 +49,18 @@ public class Inventory : MonoBehaviour
         DBManager = FindObjectOfType<DatabaseManager>();
         Audio = FindObjectOfType<AudioManager>();
         Order = FindObjectOfType<OrderManager>();
+        equip = FindObjectOfType<Equipment>();
         OOC = FindObjectOfType<OOCScript>();
         inventoryItemList = new List<Item>();
         inventoryTabList = new List<Item>();
         slots = invenUIPos.GetComponentsInChildren<InventorySlot>();
 
         
+    }
+
+    public void EquipToInven(Item _item)
+    {
+        inventoryItemList.Add(_item);
     }
 
     public void GetItem(int _ID, int _count = 1)
@@ -339,14 +346,11 @@ public class Inventory : MonoBehaviour
                         {
                             if (selectedTab == 0) //소모품
                             {
-                                Audio.Play(enterSound);
-                                stopKeyInput = true;
-                                StartCoroutine(OOCCoroutine());
-
+                                StartCoroutine(OOCCoroutine("사용하기", "취소하기"));
                             }
                             else if (selectedTab == 1) //장비품
-                            {
-
+                            {                             
+                                StartCoroutine(OOCCoroutine("장착하기", "취소하기"));
                             }
                             else
                             {
@@ -374,10 +378,13 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    IEnumerator OOCCoroutine()
+    IEnumerator OOCCoroutine(string _up, string _down)
     {
         GO_OOC.SetActive(true);
-        OOC.ShowChoice("사용하기", "취소하기");
+        Audio.Play(enterSound);
+        stopKeyInput = true;
+
+        OOC.ShowChoice(_up, _down);
         yield return new WaitUntil(() => !OOC.activated);
         if(OOC.GetResult())
         {
@@ -385,16 +392,26 @@ public class Inventory : MonoBehaviour
             {
                 if(inventoryItemList[i].itemID == inventoryTabList[selectedItem].itemID)
                 {
-                    DBManager.itemUse(inventoryItemList[i].itemID);
-
-                    if (inventoryItemList[i].itemCount > 1)
-                        inventoryItemList[i].itemCount--;
-                    else
+                    if (selectedTab == 0)
                     {
-                        inventoryItemList.RemoveAt(i);
+                        DBManager.itemUse(inventoryItemList[i].itemID);
+
+                        if (inventoryItemList[i].itemCount > 1)
+                            inventoryItemList[i].itemCount--;
+                        else
+                        {
+                            inventoryItemList.RemoveAt(i);
+                        }
+                        ShowItem();
+                        break;
                     }
-                    ShowItem();
-                    break;
+                    else if(selectedTab == 1)
+                    {
+                        equip.EquipItem(inventoryItemList[i]);
+                        inventoryItemList.RemoveAt(i);
+                        ShowItem();
+                        break;
+                    }
                 }
             }
         }

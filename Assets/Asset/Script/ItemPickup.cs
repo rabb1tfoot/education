@@ -25,6 +25,7 @@ public class ItemPickup : MonoBehaviour
         {
             AudioManager.instance.Play(pickUpSound);
             Inventory.instance.GetItem(itemID, count);
+            Inventory.instance.GetItem(20301, count);
             Destroy(this.gameObject);
         }
     }

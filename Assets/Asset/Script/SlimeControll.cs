@@ -5,7 +5,6 @@ using UnityEngine;
 public class SlimeControll : MovingObject
 {
 
-    public int atk; // 공격력
     public float attackDelay; // 공격 딜레이
     public float interMoveWaitTime; // 이동 대기시간
     private float currentWaitTime; //현재대기시간
@@ -72,7 +71,7 @@ public class SlimeControll : MovingObject
         yield return new WaitForSeconds(attackDelay);
         AudioManager.instance.Play(atkSound);
         if (NearPlayer())
-            PlayerState.instance.Hit(atk);
+            PlayerState.instance.Hit(GetComponent<EnemyState>().atk);
     }
 
     private bool NearPlayer()

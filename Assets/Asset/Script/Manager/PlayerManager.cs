@@ -23,6 +23,11 @@ public class PlayerManager : MovingObject
     public bool notMovewhentalking = false;
     private float animSpeed = 1f;
 
+    private bool attacking = false;
+
+    public float attackDelay;
+    private float currentAttackDelay;
+
     private void Awake()
     {
         if (instatnce == null)
@@ -59,7 +64,7 @@ public class PlayerManager : MovingObject
     IEnumerator MoveCoroutine()
     {
         while (Input.GetAxisRaw("Vertical") != 0 ||
-            Input.GetAxisRaw("Horizontal") != 0 && !notMovewhentalking)
+            Input.GetAxisRaw("Horizontal") != 0 && !notMovewhentalking && !attacking)
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
@@ -142,13 +147,34 @@ public class PlayerManager : MovingObject
     void Update()
     {
 
-        if (canMove && !notMovewhentalking)
+        if (canMove && !notMovewhentalking && !attacking)
         {
             if (Input.GetAxisRaw("Horizontal") != 0 ||
                 Input.GetAxisRaw("Vertical") != 0)
             {
                 canMove = false;
                 StartCoroutine(MoveCoroutine());
+            }
+        }
+
+        if(!notMovewhentalking && !attacking)
+        {
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                currentAttackDelay = attackDelay;
+                attacking = true;
+                animator.SetBool("Attacking", true);
+
+            }
+        }
+
+        if(attacking)
+        {
+            currentAttackDelay -= Time.deltaTime;
+            if(currentAttackDelay < 0)
+            {
+                animator.SetBool("Attacking", false);
+                attacking = false;
             }
         }
     }

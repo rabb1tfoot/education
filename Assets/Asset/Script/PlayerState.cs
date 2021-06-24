@@ -18,7 +18,13 @@ public class PlayerState : MonoBehaviour
     public int atk;
     public int def;
 
+    public int recoverHp;
+    public int recoverMp;
+
     public string dmgSound;
+
+    public float time;
+    private float current_time;
 
     public GameObject prefabFloatingText;
     public GameObject parent;
@@ -75,6 +81,17 @@ public class PlayerState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        current_time -= Time.deltaTime;
+
+        if(current_time <=0)
+        {
+            if(recoverHp > 0)
+            {
+                if (currentHp + recoverHp < hp - 1)
+                    currentHp += recoverHp;
+            }
+            current_time = time;
+        }
+
     }
 }

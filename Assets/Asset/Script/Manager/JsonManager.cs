@@ -67,10 +67,15 @@ public class JsonManager : MonoBehaviour
             int ID = int.Parse(itemData[i]["itemID"].ToString());
             string name = itemData[i]["itemName"].ToString();
             string des = itemData[i]["itemDescription"].ToString();
+            int atk = int.Parse(itemData[i]["atk"].ToString());
+            int def = int.Parse(itemData[i]["def"].ToString());
+            int recoverHp = int.Parse(itemData[i]["recoverHp"].ToString());
+            int recoverMp = int.Parse(itemData[i]["recoverMp"].ToString());
             int count = int.Parse(itemData[i]["itemCount"].ToString());
             Item.ItemType type = (Item.ItemType)int.Parse(itemData[i]["eType"].ToString());
 
-            DatabaseManager.instatnce.itemList.Add(new Item(ID, name, des, type, count, true));
+            DatabaseManager.instatnce.itemList.Add(new Item(ID, name, des, type
+                , atk, def, recoverHp, recoverMp, count, true));
         }
     
     }

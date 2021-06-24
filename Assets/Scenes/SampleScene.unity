@@ -8719,7 +8719,10 @@ MonoBehaviour:
   currentMp: 20
   atk: 5
   def: 0
+  recoverHp: 0
+  recoverMp: 0
   dmgSound: Cursor2
+  time: 1
   prefabFloatingText: {fileID: 5696140340812674899, guid: c16a1d12927f8d747a037513e5470e16, type: 3}
   parent: {fileID: 891903319}
 --- !u!1 &1352428763
@@ -18693,7 +18696,18 @@ MonoBehaviour:
   takeoff_sound: attackSound
   thisObject: {fileID: 555728422}
   objOOC: {fileID: 1399956184}
-  text: []
+  text:
+  - {fileID: 1706512810}
+  - {fileID: 378375485}
+  - {fileID: 2038646340}
+  - {fileID: 1711625674}
+  - {fileID: 1993729834}
+  - {fileID: 1996746609}
+  - {fileID: 1932951468}
+  - {fileID: 1485132645}
+  - {fileID: 635076778}
+  - {fileID: 1481057631}
+  - {fileID: 1751743873}
   img_slots:
   - {fileID: 29158545}
   - {fileID: 1975295136}
@@ -18715,72 +18729,120 @@ MonoBehaviour:
     itemCount: 0
     eType: 0
     itemIcon: {fileID: 0}
+    atk: 0
+    def: 0
+    recoverHp: 0
+    recoverMp: 0
   - itemID: 0
     itemName: 
     itemDescription: 
     itemCount: 0
     eType: 0
     itemIcon: {fileID: 0}
+    atk: 0
+    def: 0
+    recoverHp: 0
+    recoverMp: 0
   - itemID: 0
     itemName: 
     itemDescription: 
     itemCount: 0
     eType: 0
     itemIcon: {fileID: 0}
+    atk: 0
+    def: 0
+    recoverHp: 0
+    recoverMp: 0
   - itemID: 0
     itemName: 
     itemDescription: 
     itemCount: 0
     eType: 0
     itemIcon: {fileID: 0}
+    atk: 0
+    def: 0
+    recoverHp: 0
+    recoverMp: 0
   - itemID: 0
     itemName: 
     itemDescription: 
     itemCount: 0
     eType: 0
     itemIcon: {fileID: 0}
+    atk: 0
+    def: 0
+    recoverHp: 0
+    recoverMp: 0
   - itemID: 0
     itemName: 
     itemDescription: 
     itemCount: 0
     eType: 0
     itemIcon: {fileID: 0}
+    atk: 0
+    def: 0
+    recoverHp: 0
+    recoverMp: 0
   - itemID: 0
     itemName: 
     itemDescription: 
     itemCount: 0
     eType: 0
     itemIcon: {fileID: 0}
+    atk: 0
+    def: 0
+    recoverHp: 0
+    recoverMp: 0
   - itemID: 0
     itemName: 
     itemDescription: 
     itemCount: 0
     eType: 0
     itemIcon: {fileID: 0}
+    atk: 0
+    def: 0
+    recoverHp: 0
+    recoverMp: 0
   - itemID: 0
     itemName: 
     itemDescription: 
     itemCount: 0
     eType: 0
     itemIcon: {fileID: 0}
+    atk: 0
+    def: 0
+    recoverHp: 0
+    recoverMp: 0
   - itemID: 0
     itemName: 
     itemDescription: 
     itemCount: 0
     eType: 0
     itemIcon: {fileID: 0}
+    atk: 0
+    def: 0
+    recoverHp: 0
+    recoverMp: 0
   - itemID: 0
     itemName: 
     itemDescription: 
     itemCount: 0
     eType: 0
     itemIcon: {fileID: 0}
+    atk: 0
+    def: 0
+    recoverHp: 0
+    recoverMp: 0
   - itemID: 0
     itemName: 
     itemDescription: 
     itemCount: 0
     eType: 0
     itemIcon: {fileID: 0}
+    atk: 0
+    def: 0
+    recoverHp: 0
+    recoverMp: 0
 --- !u!1 &2037118229
 GameObject:
   m_ObjectHideFlags: 0

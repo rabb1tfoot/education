@@ -33,6 +33,16 @@ public class Equipment : MonoBehaviour
         END
     }
 
+    private enum STATE
+    {
+        ATK = 0,
+        DEF,
+        HPRECOVER = 6,
+        MPRECOVER
+    }
+
+    private int added_atk, added_def, addedRHP, addedRMP;
+
     public GameObject thisObject;
     public GameObject objOOC;
     public Text[] text; //Ω∫≈»
@@ -53,6 +63,29 @@ public class Equipment : MonoBehaviour
         Audio = FindObjectOfType<AudioManager>();
         playerState = FindObjectOfType<PlayerState>();
         ooc = FindObjectOfType<OOCScript>();
+    }
+
+    public void ShowText()
+    {
+        if(added_atk == 0)
+            text[(int)STATE.ATK].text = playerState.atk.ToString();
+        else
+            text[(int)STATE.ATK].text = playerState.atk.ToString() + "(+" + added_atk + ")";
+
+        if (added_def == 0)
+            text[(int)STATE.DEF].text = playerState.def.ToString();
+        else
+            text[(int)STATE.DEF].text = playerState.def.ToString() + "(+" + added_def + ")";
+
+        if (addedRHP == 0)
+            text[(int)STATE.HPRECOVER].text = playerState.recoverHp.ToString();
+        else
+            text[(int)STATE.HPRECOVER].text = playerState.recoverHp.ToString() + "(+" + addedRHP + ")";
+
+        if (addedRMP == 0)
+            text[(int)STATE.MPRECOVER].text = playerState.recoverMp.ToString();
+        else
+            text[(int)STATE.MPRECOVER].text = playerState.recoverMp.ToString() + "(+" + addedRMP + ")";
     }
 
     public void EquipItem(Item _item)
@@ -84,6 +117,9 @@ public class Equipment : MonoBehaviour
             inven.EquipToInven(equipmentArr[_count]);
         }
         equipmentArr[_count] = _item;
+
+        EquipTakeOn(_item);
+        ShowText();
     }
 
     public void SelectedSlot()
@@ -126,13 +162,40 @@ public class Equipment : MonoBehaviour
         if (ooc.GetResult())
         {
             inven.EquipToInven(equipmentArr[selectedSlot]);
+            EquipTakeOff(equipmentArr[selectedSlot]);
             equipmentArr[selectedSlot] = new Item(0, "", "", Item.ItemType.Equip);
             Audio.Play(takeoff_sound);
             ClearEquip();
             ShowEquip();
+            ShowText();
         }
         inputKey = true;
         objOOC.SetActive(false);
+    }
+
+    private void EquipTakeOn(Item _item)
+    {
+        playerState.atk += _item.atk;
+        playerState.def += _item.def;
+        playerState.recoverMp += _item.recoverMp;
+        playerState.recoverHp += _item.recoverHp;
+
+        added_atk += _item.atk;
+        added_def += _item.def;
+        addedRMP+= _item.recoverMp;
+        addedRHP += _item.recoverHp;
+    }
+    private void EquipTakeOff(Item _item)
+    {
+        playerState.atk -= _item.atk;
+        playerState.def -= _item.def;
+        playerState.recoverMp -= _item.recoverMp;
+        playerState.recoverHp -= _item.recoverHp;
+
+        added_atk -= _item.atk;
+        added_def -= _item.def;
+        addedRMP -= _item.recoverMp;
+        addedRHP -= _item.recoverHp;
     }
 
     void Update()
@@ -152,6 +215,7 @@ public class Equipment : MonoBehaviour
                     SelectedSlot();
                     ClearEquip();
                     ShowEquip();
+                    ShowText();
                 }
                 else
                 {

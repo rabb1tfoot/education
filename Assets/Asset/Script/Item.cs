@@ -18,7 +18,15 @@ public class Item
         Quest,
         ETC,
     }
-    public Item(int _itemID, string _itemName, string _itemDes, ItemType _etype, int _itemCount = 1, bool _bLoading = false)
+
+    public int atk;
+    public int def;
+    public int recoverHp;
+    public int recoverMp;
+
+
+    public Item(int _itemID, string _itemName, string _itemDes, ItemType _etype
+        , int _atk = 0, int _def = 0, int _recoverHp = 0, int _recoverMp = 0, int _itemCount = 1, bool _bLoading = false)
     {
         itemID = _itemID;
         itemName = _itemName;
@@ -29,5 +37,10 @@ public class Item
             itemIcon = Resources.Load("ItemIcon/" + _itemID.ToString(), typeof(Sprite)) as Sprite;
         else
             itemIcon = null;
+
+        atk = _atk;
+        def = _def;
+        recoverHp = _recoverHp;
+        recoverMp = _recoverMp;
     }
 }

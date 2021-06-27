@@ -9,6 +9,7 @@ public class PlayerManager : MovingObject
     static public PlayerManager instatnce;
 
     public string currentMapName; //«ˆ¿Á ∏ ¿Ã∏ß
+    public string sceneName; //«ˆ¿Á æ¿¿Ã∏ß
 
     public string walksound_1;
     public string walksound_2;
@@ -28,6 +29,7 @@ public class PlayerManager : MovingObject
     public float attackDelay;
     private float currentAttackDelay;
 
+    private SaveLoad saveload;
     private void Awake()
     {
         if (instatnce == null)
@@ -58,7 +60,7 @@ public class PlayerManager : MovingObject
             Path += "/";
         }
         Path += "\\Asset\\ItemIcon";
-
+        saveload = FindObjectOfType<SaveLoad>();
     }
 
     IEnumerator MoveCoroutine()
@@ -146,6 +148,14 @@ public class PlayerManager : MovingObject
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.F5))
+        {
+            saveload.CallSave();
+        }
+        if(Input.GetKeyDown(KeyCode.F9))
+        {
+            saveload.CallLoad();
+        }
 
         if (canMove && !notMovewhentalking && !attacking)
         {

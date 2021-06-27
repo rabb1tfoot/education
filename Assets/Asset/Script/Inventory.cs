@@ -58,6 +58,16 @@ public class Inventory : MonoBehaviour
         
     }
 
+    public List<Item> SaveItem()
+    {
+        return inventoryItemList;
+    }
+
+    public void LoadItem(List<Item> _itemList)
+    {
+        inventoryItemList = _itemList;
+    }
+
     public void EquipToInven(Item _item)
     {
         inventoryItemList.Add(_item);

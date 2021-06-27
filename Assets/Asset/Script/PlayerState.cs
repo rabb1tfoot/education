@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerState : MonoBehaviour
 {
@@ -28,6 +29,14 @@ public class PlayerState : MonoBehaviour
 
     public GameObject prefabFloatingText;
     public GameObject parent;
+
+    public Slider hpSlider;
+    void Start()
+    {
+        currentHp = hp;
+        currentMp = mp;
+        instance = this;
+    }
 
     public void Hit(int _atk)
     {
@@ -71,11 +80,6 @@ public class PlayerState : MonoBehaviour
             GetComponent<SpriteRenderer>().color = color;
             yield return new WaitForSeconds(0.1f);
         }
-    }
-
-    void Start()
-    {
-        instance = this;
     }
 
     // Update is called once per frame

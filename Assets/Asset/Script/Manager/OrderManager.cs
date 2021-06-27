@@ -7,7 +7,6 @@ public class OrderManager : MonoBehaviour
     private PlayerManager Player; //이동중에 키입력 처리 방지
     private List<MovingObject> characters;
 
-    // Start is called before the first frame update
     void Start()
     {
         Player = FindObjectOfType<PlayerManager>();

@@ -6,7 +6,7 @@ public class CseneChangeBound : MonoBehaviour
 {
     // Start is called before the first frame update
     private BoxCollider2D bound;
-
+    public string boundName;
     private CameraManager Camera;
     void Start()
     {
@@ -15,5 +15,11 @@ public class CseneChangeBound : MonoBehaviour
         Camera.SetBound(bound);
     }
 
-    
+    public void SetBound()
+    {
+        if(Camera != null)
+        {
+            Camera.SetBound(bound);
+        }
+    }
 }

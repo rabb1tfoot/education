@@ -23,6 +23,7 @@ public class TransforMap : MonoBehaviour
     private CameraManager Camera;
     private FadeManager Fade;
     private OrderManager Order;
+    public string changeMapName;
     void Start()
     {
         Player = FindObjectOfType<MovingObject>();
@@ -116,6 +117,7 @@ public class TransforMap : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         Order.SetUnTransparent("Player");
         Camera.SetBound(targetBound);
+        PlayerManager.instatnce.currentMapName = changeMapName;
         if (direction.Equals("Up"))
         {
 

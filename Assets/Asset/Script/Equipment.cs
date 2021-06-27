@@ -33,7 +33,7 @@ public class Equipment : MonoBehaviour
         END
     }
 
-    private enum STATE
+    public enum STATE
     {
         ATK = 0,
         DEF,

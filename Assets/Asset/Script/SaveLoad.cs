@@ -46,6 +46,7 @@ public class SaveLoad : MonoBehaviour
     private DatabaseManager DB;
     private Inventory Inven;
     private Equipment Equip;
+    private FadeManager Fade;
 
     public Data data;
 
@@ -128,6 +129,9 @@ public class SaveLoad : MonoBehaviour
             PlayerState = FindObjectOfType<PlayerState>();
             Inven = FindObjectOfType<Inventory>();
             Equip = FindObjectOfType<Equipment>();
+            Fade = FindObjectOfType<FadeManager>();
+
+            Fade.FadeOut();
 
             Player.currentMapName = data.mapName;
             Player.sceneName = data.sceneName;
@@ -180,11 +184,7 @@ public class SaveLoad : MonoBehaviour
 
             Inven.LoadItem(itemList);
             Equip.ShowText();
-
-            GameManager GM = FindObjectOfType<GameManager>();
-            GM.LoadStart();
-
-            SceneManager.LoadScene(data.sceneName);
+            StartCoroutine(WaitCoroutine());
 
         }
         else
@@ -193,6 +193,16 @@ public class SaveLoad : MonoBehaviour
         }
         fs.Close();
         Debug.Log(Application.dataPath + "에 저장완료");
+    }
+
+    IEnumerator WaitCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+
+        GameManager GM = FindObjectOfType<GameManager>();
+        GM.LoadStart();
+
+        SceneManager.LoadScene(data.sceneName);
     }
 
 }

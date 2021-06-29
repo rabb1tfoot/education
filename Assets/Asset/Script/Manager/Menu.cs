@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class Menu : MonoBehaviour
     public string cancelSound;
 
     public OrderManager Order;
+
+    public GameObject[] objects;
 
     private bool activated;
 
@@ -41,6 +44,17 @@ public class Menu : MonoBehaviour
         obj.SetActive(false);
         Audio.Play(cancelSound);
         Order.CanMove();
+    }
+
+    public void GoTitle()
+    {
+        for(int i = 0; i< objects.Length; ++i)
+        {
+            Destroy(objects[i]);
+        }
+        obj.SetActive(false);
+        activated = false;
+        SceneManager.LoadScene("Title");
     }
 
     private void Update()

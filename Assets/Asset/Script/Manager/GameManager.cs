@@ -6,8 +6,11 @@ public class GameManager : MonoBehaviour
 {
     private CseneChangeBound[] bounds;
     private PlayerManager Player;
-    private CameraManager Caemra;
-
+    private CameraManager CameraM;
+    private FadeManager Fade;
+    private Menu Menu;
+    private DialogueManager DM;
+    private Camera Cam;
     public void LoadStart()
     {
         StartCoroutine(LoadWaitCoroutine());
@@ -19,11 +22,21 @@ public class GameManager : MonoBehaviour
 
         Player = FindObjectOfType<PlayerManager>();
         bounds = FindObjectsOfType<CseneChangeBound>();
-        Caemra = FindObjectOfType<CameraManager>();
+        CameraM = FindObjectOfType<CameraManager>();
+        Fade = FindObjectOfType<FadeManager>();
+        Menu = FindObjectOfType<Menu>();
+        DM = FindObjectOfType<DialogueManager>();
+        Cam = FindObjectOfType<Camera>();
 
-        Caemra.target = GameObject.Find("Player");
-        
-        for(int i = 0; i < bounds.Length; ++i)
+        Color color = Player.GetComponent<SpriteRenderer>().color;
+        color.a = 1f;
+        Player.GetComponent<SpriteRenderer>().color = color;
+
+        CameraM.target = GameObject.Find("Player");
+        Menu.GetComponent<Canvas>().worldCamera = Cam;
+        DM.GetComponent<Canvas>().worldCamera = Cam;
+
+        for (int i = 0; i < bounds.Length; ++i)
         {
             if(bounds[i].boundName == Player.currentMapName)
             {
@@ -31,5 +44,6 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
+        Fade.FadeIn();
     }
 }
